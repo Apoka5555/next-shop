@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Home() {
+function HomePage() {
   return (
     <>
       <Head>
@@ -13,3 +13,5 @@ export default function Home() {
     </>
   );
 }
+
+export default HomePage;

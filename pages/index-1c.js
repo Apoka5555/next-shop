@@ -1,12 +1,12 @@
+// Option 1c: fetch product on the server side (in getServerSideProps)
 import Head from "next/head";
-import Link from "next/link";
 import Title from "../components/Title";
 import { getProducts } from "../lib/products";
 
-export async function getStaticProps() {
-  console.log("[HomePage] getStaticProps()");
+export async function getServerSideProps() {
+  console.log("[HomePage] getServerSideProps()");
   const products = await getProducts();
-  return { props: { products }, revalidate: 5 * 60 };
+  return { props: { products } };
 }
 
 function HomePage({ products }) {
@@ -21,9 +21,7 @@ function HomePage({ products }) {
         <Title>Next Shop</Title>
         <ul>
           {products.map((product) => (
-            <li key={product.id}>
-              <Link href={`/products/${product.id}`}>{product.title}</Link>
-            </li>
+            <li key={product.id}>{product.title}</li>
           ))}
         </ul>
       </main>

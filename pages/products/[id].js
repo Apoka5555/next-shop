@@ -1,17 +1,25 @@
+import { ApiError } from "next/dist/server/api-utils";
 import Head from "next/head";
 import Title from "../../components/Title";
 import { getProducts, getProduct } from "../../lib/products";
 
 export async function getStaticPaths() {
-  const products = await getProducts();
-  return {
-    paths: products.map((product) => ({
-      params: {
-        id: product.id.toString(),
-      },
-    })),
-    fallback: "blocking",
-  };
+  try {
+    const products = await getProducts();
+    return {
+      paths: products.map((product) => ({
+        params: {
+          id: product.id.toString(),
+        },
+      })),
+      fallback: "blocking",
+    };
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 404) {
+      return { notFound: true };
+    }
+    throw err;
+  }
 }
 
 export async function getStaticProps({ params: { id } }) {

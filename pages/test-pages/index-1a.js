@@ -1,7 +1,7 @@
 // Option 1a: fetch product on the server side (in getStaticProps)
 import Head from "next/head";
-import Title from "../components/Title";
-import { getProducts } from "../lib/products";
+import Title from "../../components/Title";
+import { getProducts } from "../../lib/products";
 
 export async function getStaticProps() {
   const products = await getProducts();
